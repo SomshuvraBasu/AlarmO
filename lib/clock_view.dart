@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
-
-
+import 'dart:async';
 
 class ClockView extends StatefulWidget {
   @override
@@ -9,13 +8,24 @@ class ClockView extends StatefulWidget {
 }
 
 class _ClockViewState extends State<ClockView> {
+  @override void initState() {
+    Timer.periodic(Duration(seconds: 1), (timer) {
+      setState(() {
+      });
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       width: 300,
       height: 300,
-      child: CustomPaint(
-        painter: ClockPainter(),
+      child: Transform.rotate(
+        angle: -pi/2,
+        child: CustomPaint(
+          painter: ClockPainter(),
+        ),
       ),
     );
   }
@@ -67,13 +77,13 @@ class ClockPainter extends CustomPainter {
     canvas.drawCircle(center, radius - 40, outlineBrush);
     
     //12 hours=360 degrees => 1 hour = 30 degrees
-    var hourHandX = centerX + 60 * cos(dateTime.hour * 30 * pi / 180);
-    var hourHandY = centerX + 60 * sin(dateTime.hour * 30 * pi / 180);
+    var hourHandX = centerX + 60 * cos(dateTime.hour * 30 + dateTime.minute*0.5 * pi / 180);
+    var hourHandY = centerX + 60 * sin(dateTime.hour * 30 + dateTime.minute*0.5 * pi / 180);
     canvas.drawLine(center, Offset(hourHandX, hourHandY), hourHandBrush);
 
     //60 minutes=360 degrees => 1 minute = 6 degrees
-    var minHandX = centerX + 70 * cos(dateTime.minute * 6 * pi / 180);
-    var minHandY = centerX + 70 * sin(dateTime.minute * 6 * pi / 180);
+    var minHandX = centerX + 70 * cos(dateTime.minute * 6 + dateTime.second*0.1 * pi / 180);
+    var minHandY = centerX + 70 * sin(dateTime.minute * 6 + dateTime.second*0.1 * pi / 180);
     canvas.drawLine(center, Offset(minHandX, minHandY), minHandBrush);
 
     //60 seconds=360 degrees => 1 second = 6 degrees
