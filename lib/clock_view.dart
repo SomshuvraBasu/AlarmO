@@ -77,8 +77,8 @@ class ClockPainter extends CustomPainter {
     canvas.drawCircle(center, radius - 40, outlineBrush);
     
     //12 hours=360 degrees => 1 hour = 30 degrees
-    var hourHandX = centerX + 60 * cos(dateTime.hour * 30 + dateTime.minute*0.5 * pi / 180);
-    var hourHandY = centerX + 60 * sin(dateTime.hour * 30 + dateTime.minute*0.5 * pi / 180);
+    var hourHandX = centerX + 60 * cos((dateTime.hour * 30 + dateTime.minute*0.5) * pi / 180);
+    var hourHandY = centerX + 60 * sin((dateTime.hour * 30 + dateTime.minute*0.5) * pi / 180);
     canvas.drawLine(center, Offset(hourHandX, hourHandY), hourHandBrush);
 
     //60 minutes=360 degrees => 1 minute = 6 degrees
